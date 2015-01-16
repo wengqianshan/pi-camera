@@ -5,7 +5,7 @@ var crypto = require('crypto');
 
 //var request = require('request');//需要安装
 var mkdirp = require('mkdirp');//需要安装
-var gaze = require('gaze');
+//var gaze = require('gaze');
 
 var source = './a.jpg';//要监听的文件
 var md5Path = './md5.txt';//md5存放文件
