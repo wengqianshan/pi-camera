@@ -10,8 +10,8 @@ var qn = require('qn');
 var source = './a.jpg';//要监听的文件
 var md5Path = './md5.txt';//md5存放文件
 var client = qn.create({
-    accessKey: '_IklVVoJ6zfKvykBMpYZGix7wwJflOotajvcOv6X',
-    secretKey: 'wN9K9PqcWYmcX9e0P22ynZGzm_DU8rQfZLeJ_cNc',
+    accessKey: 'kkkkkkkkkkkk',
+    secretKey: 'sssssssssssssssss',
     bucket: 'fudiup',
     domain: 'http://7u2lyd.com1.z0.glb.clouddn.com',
     timeout: 3600000, // default rpc timeout: one hour, optional
