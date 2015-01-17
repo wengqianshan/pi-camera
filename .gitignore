@@ -4,4 +4,5 @@ node_modules
 bower_components
 test/bower_components
 md5.txt
+log.txt
 data/
