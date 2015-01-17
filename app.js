@@ -12,8 +12,8 @@ var md5Path = './md5.txt';//md5存放文件
 var client = qn.create({
     accessKey: '_IklVVoJ6zfKvykBMpYZGix7wwJflOotajvcOv6X',
     secretKey: 'wN9K9PqcWYmcX9e0P22ynZGzm_DU8rQfZLeJ_cNc',
-    bucket: 'wenglou',
-    domain: 'http://wenglou.qiniudn.com',
+    bucket: 'fudiup',
+    domain: 'http://7u2lyd.com1.z0.glb.clouddn.com',
     timeout: 3600000, // default rpc timeout: one hour, optional
 });
 
