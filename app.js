@@ -33,7 +33,9 @@ var lastMd5 = (function() {
 }());
 
 function process(md5) {
-    
+    console.log('文件有变化，新文件md5：' + md5)
+    lastMd5 = md5;
+    fs.writeFileSync(config.md5Path, md5);
     //是否保存到本地
     if (config.saveLoal) {
         var ext = path.extname(config.source);
@@ -67,29 +69,42 @@ function process(md5) {
     });
 }
 
+function md5File(filename) {       
+    var sum = crypto.createHash('md5');
+    sum.update(fs.readFileSync(filename));
+    return sum.digest('hex');
+};
+
 function read() {
-    //缩小图片对比像素
-    lwip.open(config.source, function(err, image) {
-        image.resize(20, 20, function(err, image) {
-            image.toBuffer('jpg', function(err, buffer) {
-                //文件md5
-                var sum = crypto.createHash('md5');
-                sum.update(buffer);
-                var md5 = sum.digest('hex');
-                if (md5 !== lastMd5) {
-                    console.log('文件有变化，新文件md5：' + md5)
-                    lastMd5 = md5;
-                    fs.writeFileSync(config.md5Path, md5);
-                    process(md5);
-                    /*image.writeFile('./output.jpg', function(err) {
-                        console.log(err)
-                    })*/
-                } else {
-                    console.log('文件没有变化:lwip');
-                }
+    if (config.resize === false) {
+        var md5 = md5File(config.source);
+        if (md5 !== lastMd5) {
+            process(md5);
+        } else {
+            console.log('文件没有变化:no-resize');
+        }
+    } else {
+        //缩小图片对比像素
+        lwip.open(config.source, function(err, image) {
+            image.resize(20, 20, function(err, image) {
+                image.toBuffer('jpg', function(err, buffer) {
+                    //文件md5
+                    var sum = crypto.createHash('md5');
+                    sum.update(buffer);
+                    var md5 = sum.digest('hex');
+                    if (md5 !== lastMd5) {
+                        process(md5);
+                        /*image.writeFile('./output.jpg', function(err) {
+                            console.log(err)
+                        })*/
+                    } else {
+                        console.log('文件没有变化:lwip');
+                    }
+                })
             })
-        })
-    });
+        });    
+    }
+    
 }
 
 setInterval(function() {
