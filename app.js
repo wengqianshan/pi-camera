@@ -46,7 +46,7 @@ function process(md5) {
     client.uploadFile(config.source, function(err, qf) {
         if (err) {
             console.log(err, qf, '上传出错了');
-            var log = 'Error: ' + err + JSON.stringify(qf) + '@' + Date.now();
+            var log = 'Error: ' + err + JSON.stringify(qf) + '@' + Date.now() + '\n';
             fs.appendFile(config.logPath, log, function(err) {
                 //console.log(err)
             });
@@ -57,7 +57,11 @@ function process(md5) {
 
         var log = url + ' : ' + time + '\n';
         fs.appendFile(config.logPath, log, function(err) {
-            console.log(err)
+            if (err) {
+                console.log('写日志失败', err);
+            } else {
+                console.log('写日志成功', log)
+            }
         });
         //console.log(qf);
     });
