@@ -31,18 +31,10 @@ var lastMd5 = (function() {
         return '';
     }
 }());
-function md5File(filename) {
-  var sum = crypto.createHash('md5');
-  sum.update(fs.readFileSync(filename));
-  return sum.digest('hex');
-};
 
 function process(md5) {
-    console.log('文件有变化，新文件md5：' + md5)
-    lastMd5 = md5;
-    fs.writeFileSync(config.md5Path, md5);
-
-    //保存到本地
+    
+    //是否保存到本地
     if (config.saveLoal) {
         var ext = path.extname(config.source);
         var base = path.basename(config.source, ext);
@@ -50,7 +42,7 @@ function process(md5) {
         var newFile = base + d + ext;
         fs.writeFileSync(path.join(config.dist, newFile), fs.readFileSync(config.source));    
     }
-
+    //上传到网络
     client.uploadFile(config.source, function(err, qf) {
         if (err) {
             console.log(err, qf, '上传出错了');
@@ -81,6 +73,9 @@ function read() {
                 sum.update(buffer);
                 var md5 = sum.digest('hex');
                 if (md5 !== lastMd5) {
+                    console.log('文件有变化，新文件md5：' + md5)
+                    lastMd5 = md5;
+                    fs.writeFileSync(config.md5Path, md5);
                     process(md5);
                     /*image.writeFile('./output.jpg', function(err) {
                         console.log(err)
