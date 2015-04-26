@@ -37,7 +37,7 @@ function process(md5) {
     lastMd5 = md5;
     fs.writeFileSync(config.md5Path, md5);
     //是否保存到本地
-    if (config.saveLoal) {
+    if (config.saveLocal) {
         var ext = path.extname(config.source);
         var base = path.basename(config.source, ext);
         var d = moment().format('YYYYMMDDHHmmss');

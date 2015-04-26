@@ -1,7 +1,7 @@
 var path = require('path');
 module.exports = {
     source: './a.jpg',
-    saveLoal: true,//是否保存到本地
+    saveLocal: true,//是否保存到本地
     resize: false,//是否压缩后对比
     dist: path.join(__dirname, 'data'),// saveLoal为true才生效
     md5Path: path.join(__dirname, './md5.txt'),
